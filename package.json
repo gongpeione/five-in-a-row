@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "css-loader": "^0.28.10",
+    "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.2",
+    "ts-loader": "^4.0.0",
+    "typescript": "^2.7.2",
+    "webpack": "^4.0.0-beta.3",
+    "webpack-cli": "^2.0.9",
+    "webpack-dev-server": "^3.1.0"
+  },
+  "name": "five-in-a-row",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gongpeione/five-in-a-row.git",
+  "author": "Geeku <ggongpei@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack-dev-server --mode development"
+  },
+  "dependencies": {
+    "events": "^2.0.0"
+  }
+}

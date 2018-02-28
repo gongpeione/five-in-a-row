@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "lib": [
+        "es6",
+        "dom"
+    ],
+    "target": "es5"
+  }
+}
