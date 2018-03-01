@@ -40,7 +40,6 @@ export default class ChessRenderer extends EventEmitter {
         this.drawBoard();
 
         this.container.addEventListener('click', this.PutEvent);
-        this.container.appendChild(this.borad);
     }
 
     drawBoard () {
@@ -82,6 +81,7 @@ export default class ChessRenderer extends EventEmitter {
             }
             this.ctx.stroke();
         }
+        this.container.appendChild(this.borad);
     }
 
     private PutEvent = (e: Event) => {

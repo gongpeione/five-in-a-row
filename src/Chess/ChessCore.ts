@@ -62,6 +62,7 @@ export default class ChessCore extends EventEmitter {
     }
 
     initChessBoard () {
+        this.end = false;
         this.curColor = ChessCore.BLACK_STONE;
         this.chessBorad = [] as any;
         for (let i = 0; i < this.boradSize; i++) {

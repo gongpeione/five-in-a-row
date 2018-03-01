@@ -10,15 +10,24 @@ import './index.scss';
 // })
 
 const cm = new ChessMaster({ 
-    container: 'main',
-    type: 'canvas' 
+    container: 'div.dom',
 });
 (cm as EventEmitter).on('end', (color) => {
     const r = color === ChessCore.BLACK_STONE ? 'Black' : 'White';
     alert(`${r} Win!`);
 });
-document.querySelector('button').addEventListener('click', () => {
+document.querySelector('button.dom').addEventListener('click', () => {
     cm.reset();
 });
 
-console.log(cm);
+const cm2 = new ChessMaster({ 
+    container: 'div.canvas',
+    type: 'canvas' 
+});
+(cm2 as EventEmitter).on('end', (color) => {
+    const r = color === ChessCore.BLACK_STONE ? 'Black' : 'White';
+    alert(`${r} Win!`);
+});
+document.querySelector('button.canvas').addEventListener('click', () => {
+    cm2.reset();
+});
