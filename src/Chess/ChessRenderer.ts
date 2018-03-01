@@ -37,12 +37,17 @@ export default class ChessRenderer extends EventEmitter {
                 this.container.querySelector(`[data-position="${x},${y}"]`).innerHTML = '';
             }
             if (this.type === 'canvas') {
-                this.positionRecord.forEach(([mx, my, color]) => {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                this.drawBoard();
+                // console.log(this.positionRecord);
+                const oldRecord = this.positionRecord.slice(0);
+                this.positionRecord = [] as any;
+                oldRecord.forEach(([mx, my, color]) => {
                     if (mx === x && my === y) {
                         return;
                     }
-                    this.put(x, y, color);
-                })
+                    this.put(mx, my, color);
+                });
             }
         });
         (this as EventEmitter).on('redo', ({x, y, color}) => {
@@ -55,12 +60,15 @@ export default class ChessRenderer extends EventEmitter {
         this.container.classList.add('gee-five-in-a-row');
         
         this.drawBoard();
-
+        this.container.appendChild(this.borad);
         this.container.addEventListener('click', this.PutEvent);
     }
 
     drawBoard () {
         if (this.type === 'dom') {
+            if (this.borad) {
+                return;
+            }
             this.borad = document.createElement('ol');
             for (let i = 0; i < this.size; i++) {
                 const li = document.createElement('li');
@@ -98,7 +106,6 @@ export default class ChessRenderer extends EventEmitter {
             }
             this.ctx.stroke();
         }
-        this.container.appendChild(this.borad);
     }
 
     private PutEvent = (e: Event) => {
@@ -146,6 +153,7 @@ export default class ChessRenderer extends EventEmitter {
             ctx.fill();
 
             this.positionRecord.push([+x, +y, color]);
+            console.log(this.positionRecord);
         }
     }
 

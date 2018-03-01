@@ -71,7 +71,7 @@ export default class ChessCore extends EventEmitter {
         (this as EventEmitter).emit('undo', {
             x: this.positionRecord[this.HEAD][0],
             y: this.positionRecord[this.HEAD][1],
-            color: this.positionRecord[this.HEAD + 1]
+            color: this.curColor
         });
         // this.positionRecord[this.HEAD] = null;
         this.HEAD >= 0 && this.HEAD--;
