@@ -10,6 +10,7 @@ export default class ChessRenderer extends EventEmitter {
     private borad: HTMLCanvasElement | HTMLOListElement;
     private ctx: CanvasRenderingContext2D;
     private dpi = window.devicePixelRatio || 1;
+    private positionRecord: [[number, number, Symbol]] = [] as any; 
 
     constructor (
         container: string | HTMLElement, 
@@ -29,6 +30,22 @@ export default class ChessRenderer extends EventEmitter {
         // this.render();
 
         (this as EventEmitter).on('put', ({x, y, color}) => {
+            this.put(x, y, color);
+        });
+        (this as EventEmitter).on('undo', ({x, y, color}) => {
+            if (this.type === 'dom') {
+                this.container.querySelector(`[data-position="${x},${y}"]`).innerHTML = '';
+            }
+            if (this.type === 'canvas') {
+                this.positionRecord.forEach(([mx, my, color]) => {
+                    if (mx === x && my === y) {
+                        return;
+                    }
+                    this.put(x, y, color);
+                })
+            }
+        });
+        (this as EventEmitter).on('redo', ({x, y, color}) => {
             this.put(x, y, color);
         });
     }
@@ -127,6 +144,8 @@ export default class ChessRenderer extends EventEmitter {
             );
             ctx.closePath();
             ctx.fill();
+
+            this.positionRecord.push([+x, +y, color]);
         }
     }
 

@@ -19,6 +19,12 @@ const cm = new ChessMaster({
 document.querySelector('button.dom').addEventListener('click', () => {
     cm.reset();
 });
+document.querySelector('button.domundo').addEventListener('click', () => {
+    cm.undo();
+});
+document.querySelector('button.domredo').addEventListener('click', () => {
+    cm.redo();
+});
 
 const cm2 = new ChessMaster({ 
     container: 'div.canvas',
@@ -30,4 +36,10 @@ const cm2 = new ChessMaster({
 });
 document.querySelector('button.canvas').addEventListener('click', () => {
     cm2.reset();
+});
+document.querySelector('button.canvasundo').addEventListener('click', () => {
+    cm2.undo();
+});
+document.querySelector('button.canvasredo').addEventListener('click', () => {
+    cm2.redo();
 });

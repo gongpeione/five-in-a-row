@@ -46,10 +46,24 @@ export default class ChesssMaster extends EventEmitter {
         (this.core as EventEmitter).on('end', (color) => {
             (this as EventEmitter).emit('end', color);
         });
+        (this.core as EventEmitter).on('undo', (position) => {
+            (this.renderer as EventEmitter).emit('undo', position);
+        });
+        (this.core as EventEmitter).on('redo', (position) => {
+            (this.renderer as EventEmitter).emit('redo', position);
+        });
     }
 
     public reset () {
         this.renderer.drawBoard();
         this.core.initChessBoard();
+    }
+
+    public undo () {
+        this.core.undo();
+    }
+
+    public redo () {
+        this.core.redo();
     }
 }

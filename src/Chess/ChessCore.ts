@@ -11,6 +11,7 @@ export default class ChessCore extends EventEmitter {
     private curColor = ChessCore.BLACK_STONE;
 
     private positionRecord: [[number, number]] = [] as any;
+    private HEAD = -1;
 
     private end = false;
 
@@ -27,12 +28,19 @@ export default class ChessCore extends EventEmitter {
         if (this.chessBorad[x][y] === undefined) {
             throw new Error('Wrong position.');
         }
-        if (this.chessBorad[x][y] !== null) {
+        if (this.HEAD < (this.positionRecord.length - 1)) {
+            this.positionRecord = this.positionRecord.slice(0, this.HEAD + 1) as any;
+        }
+        if (
+            this.positionRecord.some(([mx, my]) => mx === x && my === y ) && 
+            this.chessBorad[x][y] !== null
+        ) {
             return;
         }
         this.chessBorad[x][y] = this.curColor;
         (this as EventEmitter).emit('put', {x, y, color: this.curColor});
-        this.positionRecord.push([+x, +y])
+        this.positionRecord.push([+x, +y]);
+        this.HEAD++;
         
         this.checkResult();
         this.changeColor();
@@ -56,9 +64,33 @@ export default class ChessCore extends EventEmitter {
     }
 
     public undo () {
+        if (this.HEAD === -1) {
+            return;
+        }
+        
+        (this as EventEmitter).emit('undo', {
+            x: this.positionRecord[this.HEAD][0],
+            y: this.positionRecord[this.HEAD][1],
+            color: this.positionRecord[this.HEAD + 1]
+        });
+        // this.positionRecord[this.HEAD] = null;
+        this.HEAD >= 0 && this.HEAD--;
         this.end = false;
         this.changeColor();
-        this.positionRecord.pop(); 
+    }
+
+    public redo () {
+        if (this.HEAD >= this.positionRecord.length - 1) {
+            return;
+        }
+        // this.checkResult();
+        (this as EventEmitter).emit('redo', {
+            x: this.positionRecord[this.HEAD + 1][0],
+            y: this.positionRecord[this.HEAD + 1][1],
+            color: this.curColor
+        });
+        this.HEAD < this.positionRecord.length - 1 && this.HEAD++;
+        this.changeColor();
     }
 
     initChessBoard () {
