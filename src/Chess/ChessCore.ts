@@ -10,7 +10,7 @@ export default class ChessCore extends EventEmitter {
 
     private curColor = ChessCore.BLACK_STONE;
 
-    private lastPosition: [number, number];
+    private positionRecord: [[number, number]] = [] as any;
 
     private end = false;
 
@@ -32,7 +32,8 @@ export default class ChessCore extends EventEmitter {
         }
         this.chessBorad[x][y] = this.curColor;
         (this as EventEmitter).emit('put', {x, y, color: this.curColor});
-        this.lastPosition = [+x, +y];
+        this.positionRecord.push([+x, +y])
+        
         this.checkResult();
         this.changeColor();
     }
@@ -50,17 +51,23 @@ export default class ChessCore extends EventEmitter {
                             ChessCore.BLACK_STONE;
     }
 
+    get lastPosition () {
+        return this.positionRecord[this.positionRecord.length - 1];
+    }
+
     public undo () {
         this.end = false;
         this.changeColor();
-        this.remove(this.lastPosition[0], this.lastPosition[1]);
+        this.positionRecord.pop(); 
     }
 
     initChessBoard () {
+        this.curColor = ChessCore.BLACK_STONE;
+        this.chessBorad = [] as any;
         for (let i = 0; i < this.boradSize; i++) {
             this.chessBorad.push([...Array(this.boradSize).fill(null)]);
         }
-        console.log(this.chessBorad);
+        // console.log(this.chessBorad);
     }
 
     private pointExistAndRet (x, y) {
