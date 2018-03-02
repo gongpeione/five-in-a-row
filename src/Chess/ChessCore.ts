@@ -131,16 +131,26 @@ export default class ChessCore extends EventEmitter {
 
     checkResult () {
         const resultArr: number[] = Array(4).fill(0);
+        const dir: boolean[] = Array(8).fill(true);
         const [x, y] = this.lastPosition;
         for (let i = 1; i <= 5; i++) {
-            this.pointExistAndRet(x + i, y) === this.curColor && resultArr[0]++;
-            this.pointExistAndRet(x - i, y) === this.curColor && resultArr[0]++;
-            this.pointExistAndRet(x, y + i) === this.curColor && resultArr[1]++;
-            this.pointExistAndRet(x, y - i) === this.curColor && resultArr[1]++;
-            this.pointExistAndRet(x + i, y + i) === this.curColor && resultArr[2]++;
-            this.pointExistAndRet(x - i, y - i) === this.curColor && resultArr[2]++;
-            this.pointExistAndRet(x + i, y - i) === this.curColor && resultArr[3]++;
-            this.pointExistAndRet(x - i, y + i) === this.curColor && resultArr[3]++;
+            const nextPoint = [
+                [x + i, y], 
+                [x - i, y], 
+                [x, y + i], 
+                [x, y - i], 
+                [x + i, y + i], 
+                [x - i, y - i],
+                [x + i, y - i], 
+                [x - i, y + i],
+            ];
+            nextPoint.forEach(([x, y], index) => {
+                if (!dir[index]) return;
+                // console.log(index, ~~(index / 2), x, y, )
+                this.pointExistAndRet(x, y) === this.curColor ?
+                    resultArr[~~(index / 2)]++ : 
+                    dir[index] = false;
+            });
         }
         if (resultArr.some(n => n >= 4)) {
             this.end = true;
