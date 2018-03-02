@@ -31,12 +31,15 @@ export default class ChessCore extends EventEmitter {
         if (this.HEAD < (this.positionRecord.length - 1)) {
             this.positionRecord = this.positionRecord.slice(0, this.HEAD + 1) as any;
         }
-        if (
-            this.positionRecord.some(([mx, my]) => mx === x && my === y ) && 
-            this.chessBorad[x][y] !== null
-        ) {
+        // console.log(x,y,this.positionRecord,this.chessBorad[x][y]);
+        if (this.positionRecord.some(([mx, my]) => mx == x && my == y )) {
             return;
         }
+        // if (
+        //     this.chessBorad[x][y] !== null
+        // ) {
+        //     return;
+        // }
         this.chessBorad[x][y] = this.curColor;
         (this as EventEmitter).emit('put', {x, y, color: this.curColor});
         this.positionRecord.push([+x, +y]);
@@ -97,13 +100,22 @@ export default class ChessCore extends EventEmitter {
         this.end = false;
         this.curColor = ChessCore.BLACK_STONE;
         this.chessBorad = [] as any;
+        this.positionRecord = [] as any;
+        this.HEAD = -1;
         for (let i = 0; i < this.boradSize; i++) {
             this.chessBorad.push([...Array(this.boradSize).fill(null)]);
         }
-        // console.log(this.chessBorad);
+        console.log(this.chessBorad);
     }
 
     private pointExistAndRet (x, y) {
+        // if point not exist in range of positoRecord restricted by HEAD
+        // console.log(this.positionRecord.slice(0, this.HEAD + 1));
+        if (
+            !this.positionRecord.slice(0, this.HEAD + 1).some(([mx, my]) => mx === x && my === y)
+        ) {
+            return;
+        }
         if (
             x >= 0 &&
             x <= this.boradSize - 1 &&

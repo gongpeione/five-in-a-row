@@ -67,6 +67,7 @@ export default class ChessRenderer extends EventEmitter {
     drawBoard () {
         if (this.type === 'dom') {
             if (this.borad) {
+                Array.from(this.borad.querySelectorAll('span'), el => el.remove());
                 return;
             }
             this.borad = document.createElement('ol');
@@ -153,7 +154,7 @@ export default class ChessRenderer extends EventEmitter {
             ctx.fill();
 
             this.positionRecord.push([+x, +y, color]);
-            console.log(this.positionRecord);
+            // console.log(this.positionRecord);
         }
     }
 

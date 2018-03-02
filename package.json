@@ -18,7 +18,8 @@
   "author": "Geeku <ggongpei@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --mode development"
+    "dev": "webpack-dev-server --mode development",
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "events": "^2.0.0"
