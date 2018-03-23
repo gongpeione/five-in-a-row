@@ -1,0 +1,104 @@
+.gee-five-in-a-row ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  display: flex;
+  height: 100%; }
+
+.gee-five-in-a-row > ol {
+  display: inline-flex;
+  width: 80vw;
+  height: 80vw;
+  flex-direction: column; }
+
+.gee-five-in-a-row > ol > li {
+  flex: 1; }
+
+.gee-five-in-a-row ol li li {
+  display: inline-block;
+  position: relative;
+  flex: 1; }
+  .gee-five-in-a-row ol li li::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    top: 50%; }
+  .gee-five-in-a-row ol li li::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: #ccc;
+    left: 50%; }
+  .gee-five-in-a-row ol li li span {
+    display: inline-block;
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    left: 5px;
+    top: 5px;
+    z-index: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+    .gee-five-in-a-row ol li li span.black {
+      background: #000; }
+    .gee-five-in-a-row ol li li span.white {
+      background: #fff; }
+
+.gee-five-in-a-row > ol > li li:first-of-type::before {
+  width: 50%;
+  left: 50%; }
+
+.gee-five-in-a-row > ol > li li:last-of-type::before {
+  width: 50%; }
+
+.gee-five-in-a-row > ol > li:first-of-type li::after {
+  height: 50%;
+  top: 50%; }
+
+.gee-five-in-a-row > ol > li:first-of-type li:first-of-type::before {
+  width: 50%;
+  top: 50%;
+  left: 50%; }
+
+.gee-five-in-a-row > ol > li:first-of-type li:first-of-type::after {
+  height: 50%;
+  left: 50%;
+  top: 50%; }
+
+.gee-five-in-a-row > ol > li:first-of-type li:last-of-type::before {
+  width: 50%;
+  top: 50%;
+  left: 0%; }
+
+.gee-five-in-a-row > ol > li:first-of-type li:last-of-type::after {
+  height: 50%;
+  left: 50%;
+  top: 50%; }
+
+.gee-five-in-a-row > ol > li:last-of-type li::after {
+  height: 50%;
+  top: 0%; }
+
+.gee-five-in-a-row > ol > li:last-of-type li:first-of-type::before {
+  width: 50%;
+  top: 50%;
+  left: 50%; }
+
+.gee-five-in-a-row > ol > li:last-of-type li:first-of-type::after {
+  height: 50%;
+  left: 50%;
+  top: 0%; }
+
+.gee-five-in-a-row > ol > li:last-of-type li:last-of-type::before {
+  width: 50%;
+  top: 50%;
+  left: 0%; }
+
+.gee-five-in-a-row > ol > li:last-of-type li:last-of-type::after {
+  height: 50%;
+  left: 50%;
+  top: 0%; }

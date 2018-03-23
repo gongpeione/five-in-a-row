@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
     entry: "./src/index.ts",
@@ -9,7 +11,12 @@ module.exports = {
     module: {
         rules: [
             { test: /\.tsx?$/, loader: "ts-loader" },
-            { test: /\.s[ca]ss$/, loader: ["style-loader", "css-loader", "sass-loader"] }
+            { 
+                test: /\.s[ca]ss$/, loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader", "sass-loader"]
+                }) 
+            }
         ]
     },
     devServer: {
@@ -17,9 +24,12 @@ module.exports = {
         compress: true,
         port: 2333
     },
-    plugins: [new HtmlWebpackPlugin(
-        {
-            template: path.join(__dirname, "src/index.html"),
-        }
-    )]
+    plugins: [
+        new HtmlWebpackPlugin(
+            {
+                template: path.join(__dirname, "src/index.html"),
+            }
+        ),
+        new ExtractTextPlugin('style.css')
+    ]
 }
